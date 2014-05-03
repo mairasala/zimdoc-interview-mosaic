@@ -1,30 +1,43 @@
 <html>
-	<head>
-		<title>interview archive</title>
-		<link href="css/interviews.css" rel="stylesheet" type="text/css" />
-		<script src="js/interviews.js"></script>
-	</head>
-	<body onload="init();">
-		<header class="sectionHeader">
-					<a href="javascript:history.back()">&larr;</a>
-				</header>
-		<div id="container">
-			<div id="header">
-				
-				<h1 id="headerTitle">interview archive</h1>
-				
-			</div>
-			<div id="videoContainer"></div>
-		
-		<div id="footer">
-			<!--div>zim.doc </div-->
-			<div id="interviewed_name" class="interviewedInfo"></div>
-			<div id="interviewed_keywords" class="interviewedInfo"></div>
-		</div>
-		</div>
-		<div id="bigVideoHolder" class="Off">
+<head>
+	<title>interview mosaic</title>
+	<link href="css/interviews.css" rel="stylesheet" type="text/css" />
+	<script src="js/interviews.js"></script>
+	<script src="js/videocontrols.js"></script>
+</head>
+<body onload="init();">
+	<header class="sectionHeader">
+				<a href="javascript:history.back()">&larr;</a>
+			</header>
+	<div id="container">
+		<div id="header" class="header">
+			
+			<h1 id="headerTitle">interview mosaic</h1>
 			
 		</div>
-		<!--div id="back">home</div-->
-	</body>
+		<div id="videoContainer"></div>
+	
+	<div id="footer">
+		<!--div>zim.doc </div-->
+		<div id="interviewed_name" class="interviewedInfo"></div>
+		<div id="interviewed_keywords" class="interviewedInfo"></div>
+	</div>
+	</div>
+	<div id="bigVideoHolder" class="Off">
+		<video id="bigV" autoplay="true" class="videoBig"></video>
+		<div id="bigVLoadingContainer" class="bigVideoLoadingcontainer">
+			<div id="bigVLoading" class="videoThumbLoading loadingOf"></div>
+		</div>
+		<div id="video-controls" class="bigVideoController">
+			<a href="#" id="play-pause" class="playpauseButton buttons"></a>
+			<div id="curtime" class="videoTime"></div>
+			<input type="range" id="seek-bar" value="0" class="videoSearch">
+			<div id="time" class="videoTime"></div>
+			<div id="mute" class="playpauseButton volviewer"></div>
+			<input type="range" id="volume-bar" min="0" max="1" step="0.1" value="1" class="videovol">
+			<a href="#" class="playpauseButton buttons fitState" id="full-screen"></a>
+		</div>
+	</div>
+	<!--div id="back">home</div-->
+</body>
 </html>

@@ -1,3 +1,6 @@
 .DS_Store
 *.ogg
 *.mov
+*.mp4
+*.ogv
+*.sh
