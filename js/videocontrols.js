@@ -1,4 +1,4 @@
-function initiateButtonsControls(video)
+function initiateButtonsControls()
 {
 	var playButton = document.getElementById("play-pause");
 	var muteButton = document.getElementById("mute");
@@ -63,23 +63,6 @@ seekBar.addEventListener("change", function() {
   video.currentTime = time;
 });
 
-video.addEventListener("loadedmetadata", function(){
-	var totalTimeDiv=document.getElementById("time");
-	totalTimeDiv.innerHTML=secondsToTimestring(this.duration);
-});
-// Update the seek bar as the video plays
-video.addEventListener("timeupdate", function() {
-  // Calculate the slider value
-  var value = (100 / this.duration) * this.currentTime;
-  var totalTimeDiv=document.getElementById("curtime");
-	totalTimeDiv.innerHTML=secondsToTimestring(this.currentTime);
-var seekBar = document.getElementById("seek-bar");
-  // Update the slider value
-  seekBar.value = value;
-  var loading=document.getElementById("bigVLoading");
-	loading.className="videoThumbLoading loadingOff";
-});
-
 // Pause the video when the slider handle is being dragged
 // 
 seekBar.addEventListener("mousedown", function() {
@@ -115,6 +98,26 @@ volumeBar.addEventListener("change", function() {
 });
 }
 
+function initiateVideoControlUIUpdate(video){
+	video.addEventListener("loadedmetadata", function(){
+	var totalTimeDiv=document.getElementById("time");
+	totalTimeDiv.innerHTML=secondsToTimestring(this.duration);
+},false);
+// Update the seek bar as the video plays
+video.addEventListener("timeupdate", function() {
+  // Calculate the slider value
+  var value = (100 / this.duration) * this.currentTime;
+  var totalTimeDiv=document.getElementById("curtime");
+	totalTimeDiv.innerHTML=secondsToTimestring(this.currentTime);
+var seekBar = document.getElementById("seek-bar");
+  // Update the slider value
+  seekBar.value = value;
+  var loading=document.getElementById("bigVLoading");
+	loading.className="videoThumbLoading loadingOff";
+},false);
+
+}
+
 function playvideoBig()
 {
 	var playButton = document.getElementById("play-pause");
@@ -132,8 +135,8 @@ function playvideoBig()
 	curTimeDiv.innerHTML=totalTimeDiv.innerHTML="00:00";
 
 	seekBar.value=0;
-	volumeBar.value=1;
-	video.volume=1;
+	volumeBar.value=0.5;
+	video.volume=0.5;
 
 	var loading=document.getElementById("bigVLoading");
 	loading.className="videoThumbLoading loadingOn";
