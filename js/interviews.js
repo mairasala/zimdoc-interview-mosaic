@@ -169,7 +169,6 @@ function checkVideosLoaded(){
 	if((loadedVideo.length+errorLoadVideos.length)>=videoData.length){
 		console.log("all videos are loaded");
 		if(loadedVideo.length>(videoData.length/2)){
-			loadprog.parentNode.removeChild(loadprog);
 			allVideoLoaded();
 		}else{
 			fallback("unknown");
@@ -179,6 +178,8 @@ function checkVideosLoaded(){
 
 function allVideoLoaded()
 {
+	var loadprog=document.getElementById("videoLoadingProgress");
+	loadprog.parentNode.removeChild(loadprog);
 	var header=document.getElementById("header");
 	for(var i=0; i<data.length;i++)
 	{
@@ -238,13 +239,16 @@ function onWindowResize()
 		var v=document.getElementById("video"+i);
 		var vc=document.getElementById("videoThumbContainer"+i);
 		var vb=document.getElementById("videoThumbLoadingcontainer"+i);
+		var proto=document.getElementById("proto");
+		
 		if(v!=null && v!=undefined){
 			vb.style.height=vc.style.height=v.style.height=Math.floor(vh);
 			vb.style.width=vc.style.width=v.style.width=Math.floor(vw);
 		}
 	}
-	container.style.width=columns*Math.floor(vw);
+	proto.style.width=container.style.width=columns*Math.floor(vw);
 	container.style.height=rows*Math.floor(vh);
+	
 }
 
 function createBigVideo()
@@ -341,11 +345,11 @@ function playVideo(e)
 	this.removeEventListener('mousemove', playVideo);
 
 
-	var loadingid=this.id.replace("videoThumbContainer","videoThumbLoading");
+	/*var loadingid=this.id.replace("videoThumbContainer","videoThumbLoading");
 	var loading=document.getElementById(loadingid);
-	loading.className="videoThumbLoading loadingOn";
+	loading.className="videoThumbLoading loadingOn";*/
 
-	video.addEventListener('timeupdate',hideLoading,false);
+	//video.addEventListener('timeupdate',hideLoading,false);
 	video.volume=0.5;
 	video.play();
 	currentVideo=videoid.replace("video","");
@@ -353,24 +357,24 @@ function playVideo(e)
 	inter_name.innerHTML=videoData[currentVideo].name;
 }
 
-function hideLoading(e)
+/*function hideLoading(e)
 {
 	this.removeEventListener('timeupdate',hideLoading);
 	var loadingid=this.id.replace("video","videoThumbLoading");
 	var loading=document.getElementById(loadingid);
 	loading.className="videoThumbLoading loadingOff";
 	//console.log("is playing"+loadingid);
-}
+}*/
 
 function pauseVideo(e)
 {
 	var videoid=this.id.replace("videoThumbContainer","video");
 	var video=document.getElementById(videoid);
 
-	video.removeEventListener('play',hideLoading);
+	/*video.removeEventListener('play',hideLoading);
 	var loadingid=this.id.replace("videoThumbContainer","videoThumbLoading");
 	var loading=document.getElementById(loadingid);
-	loading.className="videoThumbLoading loadingOff";
+	loading.className="videoThumbLoading loadingOff";*/
 
 	video.pause();
 	this.addEventListener('mousemove', playVideo, false);
