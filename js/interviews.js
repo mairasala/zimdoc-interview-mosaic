@@ -4,9 +4,10 @@ var bigVholder;
 var inter_name;
 var inter_keys;
 var container;
-var video_ext;
+var video_ext=null;
 var src_mini="media/video/small/";
 var src_big="media/video/";
+//var src_big="media/video/small/";
 var src_poster="media/img/thumbnails/"
 
 var data=[];
@@ -42,19 +43,35 @@ videoData[15]={name:"Rabia & Alba",keywords:"feminism politics"};
 var currentChapter;
 var currentVideo;
 var totalVideos=data[data.length-1].videos.length;
+//var totalVideos=8;
 
 function init()
 {
 	
 	container=document.getElementById("videoContainer");
 
-	video_ext="mp4";
+	var exts=['ogv','webm','mp4'];
+	if( /chrome/i.test(navigator.userAgent)){
+		exts=['webm','ogv','mp4'];
+	}
+	for(var i=0; i<exts.length; i++)
+	{
+		if(supports_media(exts[i],'video')){
+			video_ext=exts[i];
+			break;
+		}
+	}
+
+	/*video_ext="webm";
 	if(!supports_media(video_ext,'video')){
 		video_ext='ogv';
 		if(!supports_media(video_ext,'video')){
-			video_ext=null;
+			video_ext='mp4';
+			if(!supports_media(video_ext,'video')){
+				video_ext=null;
+			}
 		}
-	}	
+	}*/	
 	if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
 		fallback('mobile');
 	}else if(video_ext==null){
@@ -105,8 +122,9 @@ function intiateApp()
 		vc.appendChild(v);
 		metadata.push(0);
 
-		v.oncanplay=videoReady;
-		v.onerror=videoLoadError;
+		v.addEventListener("canplay",videoReady);
+		v.addEventListener("error",videoLoadError);
+		//v.load();
 		//v.onloadedmetadata=videoLoadMetadata;
 		
 		var videosource=src_mini+i+".";
@@ -146,6 +164,8 @@ function leavewindow(e){
 function videoReady(e)
 {
 	console.log("one more video: "+e.type,e.currentTarget.id);
+	e.currentTarget.removeEventListener('canplay',videoReady);
+	e.currentTarget.removeEventListener('error',videoLoadError);
 	loadedVideo.push(e.currentTarget.id);
 	e.currentTarget.oncanplay=null;
 	checkVideosLoaded();
@@ -154,7 +174,8 @@ function videoReady(e)
 function videoLoadError(e)
 {
 	console.log("one error video: "+e.type,e.currentTarget.id);
-	e.currentTarget.onerror=null;
+	e.currentTarget.removeEventListener('canplay',videoReady);
+	e.currentTarget.removeEventListener('error',videoLoadError);
 	errorLoadVideos.push(e.currentTarget.id);
 	e.currentTarget.parentNode.parentNode.removeChild(e.currentTarget.parentNode);
 	checkVideosLoaded();
@@ -268,7 +289,8 @@ function createBigVideo()
 	closeBut.innerHTML="X";
 	bigVholder.appendChild(closeBut);*/
 	closeBut.addEventListener("click",closeBigVideo,false);
-	bigVideo.onended=closeBigVideo;
+	//bigVideo.onended=closeBigVideo;
+	bigVideo.addEventListener("ended",closeBigVideo,false);
 	initiateVideoControlUIUpdate(bigVideo);
 
 }
@@ -397,7 +419,6 @@ function enlargeVideo(e)
 	bigVideo.load();
 	bigVideo.addEventListener("loadedmetadata", seekBigVideoPoint, false);
 	playvideoBig();
-	
 }
 function seekBigVideoPoint() {
     this.currentTime = document.getElementById("video"+currentVideo).currentTime;
@@ -405,14 +426,14 @@ function seekBigVideoPoint() {
 }
 function closeBigVideo(e)
 {
+	var curtime=e.type=="ended"?0:bigVideo.currentTime;
 	bigVholder.className= "Off";
 	bigVideo.pause();
-	document.getElementById("video"+currentVideo).currentTime=bigVideo.currentTime;
+	document.getElementById("video"+currentVideo).currentTime=curtime;
 	bigVideo=document.getElementById("bigV");
 	bigVideo.parentNode.removeChild(bigVideo);
 	var closeBut=document.getElementById("closeBigVideo");
 	closeBut.removeEventListener("click",closeBigVideo);
-
 }
 
 var supports_media = function(mimetype, container) {
@@ -420,6 +441,10 @@ var supports_media = function(mimetype, container) {
 	switch(mimetype){
 		case 'ogv':
 		mimetype='video/ogg; codecs="theora, vorbis"';
+		break;
+
+		case 'webm':
+			mimetype = 'video/webm; codecs="vp8, vorbis"';
 		break;
 
 		case 'mp4':

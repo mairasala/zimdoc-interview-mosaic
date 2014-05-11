@@ -188,7 +188,7 @@ height: 16px;
   	position: relative;
 }
 .bigVideoLoadingcontainer{
-	display: table-cell; */
+	display: table-cell; 
 position: absolute;
 width: 40px;
 height: 40px;
@@ -200,12 +200,16 @@ bottom: 0;
 right: 0;
 }
 .totalVideoLoading{
-	color: white;
-width: 100%;
+color: white;
 text-align: center;
 font-size: 1em;
-margin-top: 25%;
-height: 50px;
+margin: auto;
+position: absolute;
+height: 20px;
+top: 0;
+left: 0;
+bottom: 0;
+right: 0;
 }
 .loadingVideo
 {
