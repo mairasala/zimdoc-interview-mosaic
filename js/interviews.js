@@ -434,6 +434,14 @@ function closeBigVideo(e)
 	bigVideo.parentNode.removeChild(bigVideo);
 	var closeBut=document.getElementById("closeBigVideo");
 	closeBut.removeEventListener("click",closeBigVideo);
+
+	if (document.cancelFullscreen) {
+    		document.cancelFullscreen();
+  		} else if (document.mozCancelFullScreen) {
+    		document.mozCancelFullScreen(); // Firefox
+  		} else if (document.webkitCancelFullScreen) {
+    		document.webkitCancelFullScreen(); // Chrome and Safari
+  		}
 }
 
 var supports_media = function(mimetype, container) {
