@@ -6,6 +6,7 @@ html, body{
 	background: black;
 	font-family: arial;
 	height: 100%;
+	overflow: hidden;
 }
 
 #videoContainer
@@ -19,46 +20,236 @@ html, body{
 	max-width: 100%;
 }
 
-#header{
-	color:#cacaca;
+.header{
+	color: #cacaca;
 	margin-left: 50px;
-	position:relative;
-	height:90px;
-	font-size:1.4em;
+	position: relative;
+	height: 75px;
+	font-size: 1em;
+	padding-top: 20px;
+}
+.proto{
+	color: #cacaca;
+	position: absolute;
+	margin-left: 50px;
+	text-align: right;
+	width: 956px;
+	height: 75px;
+	padding-top: 60px;
 }
 #footer{
 	margin-left: 50px;
-	bottom:0px;
+	bottom: 0px;
 	color: #c3c3c3;
-	font-size: 1.0em;
-	position:relative;
-	/*width: 15%;*/
+	font-size: 0.8em;
+	position: relative;
+	/* width: 15%; */
 	padding-top: 15px;
-	height:35px;
-	float:left;
-	/*margin-top: 96px;*/
-	/*width:14%;*/
-	
+	height: 35px;
+	float: left;
 }
 .headerButton{
 	float:left;
 	margin:5px 30px 5px 30px ;
 }
-.videoThumb
-{
 
+.bigVideoController {
+position: absolute;
+bottom: 0px;
+width: 538px;
+margin-left: auto;
+margin-right: auto;
+left: 0;
+right: 0;
+background-color: rgba(0,0,0,0.8);
+border-radius: 5px;
+padding: 2px 5px;
+}
+.videoThumbContainer
+{
 	margin:0px;
 	padding:0px;
 	float:left;
 }
+
+input[type='range'] {
+	-webkit-appearance: none;
+background-color: #ccc;
+height: 7px;
+vertical-align: middle;
+float: left;
+margin: 5px;
+margin-top: 7px;
+border-radius: 2px;
+}
+
+input[type='range']::-moz-range-track {
+		-moz-appearance: none;
+height: 7px;
+vertical-align: middle;
+float: left;
+margin: 5px;
+margin-top: 7px;
+border-radius: 2px;
+	}
+
+	input[type='range']::-webkit-slider-thumb {
+		-webkit-appearance: none !important;
+		background-color: #535353;
+		height: 11px;
+		width: 15px;
+		border-radius: 2px;
+			border:none;
+	cursor:pointer;
+	}
+	input[type='range']::-moz-range-thumb {
+		-moz-appearance: none;
+		background-image: linear-gradient(to bottom, #535353, #535353 100%);
+		height: 11px;
+		width: 15px;
+	cursor:pointer;
+	border-radius: 2px;
+	border:none;
+	}
+
+input:focus{
+    outline: 0;
+}
+.videoTime{
+	color: #535353;
+float: left;
+padding: 5px;
+font-size: 12px;
+}
+.videoSearch
+{
+	width:300px;
+}
+.videovol{
+	width:75px;
+}
+.volviewer{
+	cursor:default;
+	-moz-user-select: none; 
+    -khtml-user-select: none; 
+    -webkit-user-select: none; 
+    -o-user-select: none; 
+}
+.buttons{
+	cursor:pointer;
+}
+.playpauseButton {
+display: inline-block;
+color: #535353;
+font-family: Arial;
+text-decoration: none;
+text-align: center;
+float: left;
+border-radius: 2px;
+margin: 2px;
+background: transparent url(../media/img/controls.svg) no-repeat;
+width:16px;
+height: 16px;
+}
+.pauseState{
+	background-position: 0 -16px;
+}
+.playState{
+	background-position: 0 0px;
+}
+.muteState{
+	background-position: -16px 0;
+}
+.soundState{
+	background-position: -16px -16px;
+}
+.fitState{
+	background-position: -32px 0;
+}
+.fullscreenState{
+	background-position: -32px -16px;
+}
+
+
+
+.myButton:hover {
+	background-color:#cccccc;
+}
+.myButton:active {
+	position:relative;
+	top:1px;
+}
+
+.videoThumbLoadingcontainer
+{
+	display: table-cell;
+  	vertical-align: middle;
+  	text-align: center;
+  	position: relative;
+}
+.bigVideoLoadingcontainer{
+	display: table-cell; 
+position: absolute;
+width: 40px;
+height: 40px;
+margin: auto;
+position: absolute;
+top: 0;
+left: 0;
+bottom: 0;
+right: 0;
+}
+.totalVideoLoading{
+color: white;
+text-align: center;
+font-size: 1em;
+margin: auto;
+position: absolute;
+height: 20px;
+top: 0;
+left: 0;
+bottom: 0;
+right: 0;
+}
+.loadingVideo
+{
+	display: none;
+}
+.videoThumbLoading
+{
+	background-image: url(../media/img/loading4.gif);
+	width: 40px;
+	height: 40px;
+	display: inline-block;
+  	text-align: left;
+  	opacity: 0.5;
+}
+.loadingOff
+{
+	opacity: 0;
+}
+
+.loadingOn{
+	opacity: .5;
+}
+.videoThumb
+{
+	position: absolute;
+}
 .activevideo
 {
 	opacity:1;
+
+}
+.containeractivevideo
+{
 	cursor:pointer;
 }
 .inactivevideo
 {
 	opacity:0.3;
+}
+.containerinactivevideo{
 	cursor:auto;
 }
 #bigVideoHolder{
@@ -142,11 +333,12 @@ html, body{
 }
 
 .sectionHeader{
-	position:absolute;
-	color:#999;
-	top:8px;
-	left:8px;
-	padding:0.2em;
+	position: absolute;
+	color: #999;
+	top: 18px;
+	left: 8px;
+	padding: 0.2em;
+	/* font-size: 0.9em; */
 
 }
 .sectionHeader a{
