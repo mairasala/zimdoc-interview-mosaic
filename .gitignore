@@ -8,5 +8,7 @@
 *.jpg
 *.gif
 *.zip
+*.sublime-project
+*.sublime-workspace
 
 js/blackframe (chrome)1,3,4,7,8,9,13,14

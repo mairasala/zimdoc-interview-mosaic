@@ -62,20 +62,18 @@ function init()
 		}
 	}
 
-	/*video_ext="webm";
-	if(!supports_media(video_ext,'video')){
-		video_ext='ogv';
-		if(!supports_media(video_ext,'video')){
-			video_ext='mp4';
-			if(!supports_media(video_ext,'video')){
-				video_ext=null;
-			}
-		}
-	}*/	
+	// if( /chrome/i.test(navigator.userAgent) && video_ext!=null){
+	// 	intiateApp();
+	// }else{
+	// 	fallback('browser');
+	// }
+
 	if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
 		fallback('mobile');
+	}else if(!/chrome/i.test(navigator.userAgent)){
+		fallback('browser');
 	}else if(video_ext==null){
-			fallback('media');
+		fallback('media');
 	}else{
 		intiateApp();
 	}
@@ -95,9 +93,14 @@ function fallback(problem){
 		case "unknown":
 		message="there was an unknown problem. please try again later."
 		break;
+
+		case "browser":
+		message="We're sorry, but the interview mosaic is only a prototype and currently only suuports the Google Chrome browser. For the best viewing experience, you can <a href='http://www.google.com/chrome?'>download chrome</a> and launch this site again.";
+		document.getElementById("videoLoadingProgress").innerHTML="";
+		break;
 	}
 	container.innerHTML=message;
-	container.setAttribute("class", "header");
+	container.setAttribute("class", "header message");
 }
 
 function intiateApp()
@@ -122,17 +125,27 @@ function intiateApp()
 		vc.appendChild(v);
 		metadata.push(0);
 
-		v.addEventListener("canplay",videoReady);
-		v.addEventListener("error",videoLoadError);
+		
 		//v.load();
 		//v.onloadedmetadata=videoLoadMetadata;
 		
 		var videosource=src_mini+i+".";
+		// var videosource="http://www.jplayer.org/video/webm/Big_Buck_Bunny_Trailer.";
 		//var videosource=src_mini+14+".";
 		v.className="videoThumb inactivevideo loadingVideo";
 
 		//v.setAttribute("poster",src_poster+i+".jpg");
 		v.setAttribute("src", videosource+video_ext);
+		if(/firefox/i.test(navigator.userAgent)){
+			v.setAttribute("preload","metadata")
+		}else{
+			v.addEventListener("canplay",videoReady);
+			v.addEventListener("error",videoLoadError);
+			// v.addEventListener("canplaythrough",videostalled);
+			// v.addEventListener("stalled", videostalled);
+			// v.addEventListener("suspend", videostalled);
+			// v.onabort= videostalled;
+		 }
 		v.load();
 		//v.setAttribute("preload", "none");
 
@@ -146,6 +159,13 @@ function intiateApp()
 		vb.className="videoThumbLoading loadingOff";
 		vlc.appendChild(vb);
 	}
+	if(/firefox/i.test(navigator.userAgent)){
+		allVideoLoaded();
+	}
+}
+
+function videostalled(e){
+	console.log(e);
 }
 
 function leavewindow(e){

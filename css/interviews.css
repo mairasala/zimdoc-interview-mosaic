@@ -170,6 +170,23 @@ height: 16px;
 	background-position: -32px -16px;
 }
 
+.message{
+width: 330px;
+padding: 50px 35px !important;
+background: none repeat scroll 0% 0% rgba(150, 150, 150, 0.3);
+color: #FFF;
+font-style: normal;
+font-weight: 500;
+font-size: 12px;
+font-variant: normal;
+letter-spacing: 1px;
+text-align: center;
+margin: 100px auto;
+}
+.message a{
+	color:#fff;
+}
+
 
 
 .myButton:hover {

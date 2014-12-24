@@ -2,6 +2,7 @@
 <head>
 	<title>interview mosaic</title>
 	<link href="css/interviews.css" rel="stylesheet" type="text/css" />
+	<script src="js/jquery-2.1.3.min.js"></script>
 	<script src="js/interviews.js"></script>
 	<script src="js/videocontrols.js"></script>
 	<script>
@@ -12,6 +13,11 @@
 
   ga('create', 'UA-52534013-1', 'auto');
   ga('send', 'pageview');
+
+  $(document).ajaxError(function(e, request, settings) {
+  	console.log('ajax_error',e,request,settings);
+  }
+  console.log('hola caracola')
 </script>
 </head>
 <body onload="init();">
